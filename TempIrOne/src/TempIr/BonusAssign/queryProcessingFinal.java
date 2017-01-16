@@ -113,10 +113,11 @@ class queryProcessingFinal{
 			e.printStackTrace();
 		}
 		int noDocs = finalDocs.totalHits;
-		System.out.println(noDocs);
+		//System.out.println(noDocs);
 		if (finalDocs.totalHits == 0) {
 			System.out.println("No data found.");
 		} else {
+			ArrayList<String> previousDocIds = new ArrayList<String>();
 			
 			
 			for (ScoreDoc d : finalDocs.scoreDocs) {
@@ -149,10 +150,14 @@ class queryProcessingFinal{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				System.out.println("Found in :: DOC ID::"+id);
+				while(previousDocIds.size()<=10){
+					previousDocIds.add(id);
+				}
+				//System.out.println("Found in :: DOC ID::"+id);
 				
 			}
+			System.out.println("Without Query expansion");
+			calculatePrecision(previousDocIds);
 		}
 		try {
 			Process p = Runtime.getRuntime().exec("python word2vec.py -c /Users/Rishita/ITIS/semester_02/txtCorpus1000/");
@@ -213,7 +218,7 @@ class queryProcessingFinal{
 			e.printStackTrace();
 		}
 		noDocs = finalDocs1.totalHits;
-		System.out.println(noDocs);
+		//System.out.println(noDocs);
 		if (finalDocs1.totalHits == 0) {
 			System.out.println("No data found.");
 		} else {
@@ -229,11 +234,15 @@ class queryProcessingFinal{
 				} // get the next document
 				String id = doc.get("doc_ID");
 				docIds.add(id.trim());
-				System.out.println("DocID: "+id);
+				//System.out.println("DocID: "+id);
 			}
 		
 	}
 	//Calculating precision!
+	calculatePrecision(docIds);	
+		
+	}
+	public static void calculatePrecision(ArrayList<String> docIds){
 		int count5 = 0, count10=0;
 		Scanner readerx = new Scanner(System.in);
 		System.out.println("Enter the subtopic id of Answer for groundTruth: ");
@@ -269,7 +278,12 @@ class queryProcessingFinal{
 			}
 			
 		}
+		if(count5>5){
+			count5=5;
+		}
+		if(count10>10){
+			count10=10;
+		}
 		System.out.println("Precision@5: "+count5+"/5 Precision@10: "+count10+"/10"); //To prevent rounding up of small values
-		
 	}
 }
