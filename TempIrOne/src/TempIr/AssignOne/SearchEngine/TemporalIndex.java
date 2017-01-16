@@ -39,7 +39,7 @@ public class TemporalIndex{
 	//Indexing the directory 
 	String inputPath = "/Users/Rishita/Downloads/Temporalia_Sample3";
 
-	String saveDir = "/Users/Rishita/ITIS/semester_02/TempIr";
+	String saveDir = "/Users/Rishita/ITIS/semester_02/TempIrBonus";
 	SimpleFSDirectory dir = null;
 	 try {
 		dir = new SimpleFSDirectory(Paths.get(saveDir));
@@ -122,7 +122,8 @@ public class TemporalIndex{
 					//System.out.println(date);
 					//System.out.println(content);
 					org.apache.lucene.document.Document currentDoc = new org.apache.lucene.document.Document();
-					currentDoc.add(new TextField("content", new StringReader(content)));
+					//currentDoc.add(new TextField("content", new StringReader(content), Store.YES));
+					currentDoc.add(new TextField("content", content, Store.YES));
 					currentDoc.add(new StringField("title", title, Store.YES));
 					currentDoc.add(new StringField("doc_ID", id, Store.YES));
 					currentDoc.add(new StringField("date", date, Store.YES));
