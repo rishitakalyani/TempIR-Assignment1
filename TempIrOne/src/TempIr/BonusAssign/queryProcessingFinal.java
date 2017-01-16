@@ -183,7 +183,7 @@ class queryProcessingFinal{
 				res=res.replace(",", "");*/
 				
 			}
-			System.out.println("value is : "+res);
+			System.out.println("Expanded query is : "+queryPartA+" "+res);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
